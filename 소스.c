@@ -2,6 +2,6 @@
 
 void main()
 {
-	int i = 1;
+	int i = 1; /*i ดย 1*/
 	printf("%d\n", i);
 }
