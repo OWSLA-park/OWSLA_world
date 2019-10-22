@@ -2,6 +2,6 @@
 
 void main()
 {
-	int i = 1; /*i 는 1*/
+	int i = 1; /*i 는 1 이다*/
 	printf("%d\n", i);
 }
