@@ -1,7 +1,0 @@
-#include <stdio.h>
-
-void main()
-{
-	int i = 1; /*i ´Â 1 ÀÌ´Ù*/
-	printf("%d\n", i);
-}
