@@ -1,18 +1,19 @@
 ﻿#include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #pragma warning(disable:4996)
 
 int save; //저장
 int load; //불러오기
-int attdm; //공격력
-int	def; //방어력
+int attdm; //공격력 (0 = 1~2) (1 = 3~5) (2 = 6~9) (3 =10~15) (4 = 15~17) (5 = 18~23) (6 = ??~??)
+int	def; //방어력 (0 = 0) (1 = 2) (2 = 6) (3 = 10) (4 = 15) (5 = 19) (6 = ??)
 int	hp; //체력
 int	mp; //마나
-int exp; //경험치
-int level; //레벨
-int weapon; //무기
-int armor; //방어구
-int riding; //탈것
+int xp; //경험치
+int level = 1; //레벨
+int weapon; //무기 (0 = 맨손) (1 = 커튼봉) (2 = 쇠파이프) (3 = 골프채) (4 = 녹슨 진검) (5 = 날카로운 진검) (6 = 딜도)
+int armor; //방어구 (0 = 앞치마) (1 = 동물 잠옷) (2 = 청바지 청자켓) (3 = 롱패딩) (4 = 두꺼운 검도복) (5 = 신형 전투복) (6 = 전신 타이즈)
+int riding; //탈것 (0 = 없음) (1 = 인라인스케이트) (2 = 킥보드) (3 = 악센트) (3 = K3) (4 = 두돈반)
 int mobhp; //몬스터체력
 int mobattdm; //몬스터공격력
 int select;
@@ -22,9 +23,9 @@ int select3;
 
 int secter1() //1층 스폰
 {
-	static int a;
 	while (1)
 	{
+		static int a;
 		system("cls");
 		printf("              ┌───────────────────────┐\n");
 		printf("              │           스폰지점  -  한승아파트 1층        │\n");
@@ -39,74 +40,32 @@ int secter1() //1층 스폰
 		printf(" 4. 저장하고 종료하기(미구현)\n");
 
 		scanf("%d", &select1);
-
-		if (select1 == 4) {
-			system("cls");
-			printf("저장중입니다.");
-			_sleep(500);
-			system("cls");
-			printf("저장중입니다..");
-			_sleep(500);
-			system("cls");
-			printf("저장중입니다...");
-			_sleep(500);
-			system("cls");
-			printf("저장중입니다....");
-			_sleep(500);
-			system("cls");
-			printf("저장완료!");
-			_sleep(500);
-			printf("게임을 종료합니다.");
-			return 0;
+		if (select1 == 1) {
+			chequip(1);//캐릭터 장비
 		}
 		else {
-			if (select1 == 1) {
-				system("cls");
-				printf("              ┌────────────┐\n");
-				printf("                       캐릭터 장비        \n");
-				printf("                                          \n");
-				if (weapon == 0) { printf("                 무기 : 맨손              \n"); }
-				//printf("                 무기 : 맨손              \n");
-				printf("                                          \n");
-				if (armor == 0) { printf("               방어구 : 앞치마            \n"); }
-				//printf("               방어구 : 앞치마            \n");
-				printf("                                          \n");
-				if (riding == 0) { printf("               라이딩 : 없음              \n"); }
-				//printf("               라이딩 : 없음              \n");
-				printf("                                          \n");
-				printf("              └────────────┘\n");
-				int a;
-				printf(" 1. 돌아가기\n");
-				scanf("%d", &a);
-				system("cls");
-				if (a == 1) {
-					secter1();
-				}
+			if (select1 == 2) {
+				chstatus(1);//캐릭터 정보 
 			}
 			else {
-				if (select1 == 2) {
+				if (select1 == 4) {
 					system("cls");
-					printf("              ┌────────────┐\n");
-					printf("                       캐릭터 정보        \n");
-					printf("                                          \n");
-					printf("               공격력 : %d                \n", attdm);
-					printf("                                          \n");
-					printf("               방어력 : %d                \n", def);
-					printf("                                          \n");
-					printf("               체력   : %d                \n", hp);
-					printf("                                          \n");
-					printf("               마나   : %d                \n", mp);
-					printf("                                          \n");
-					printf("               경험치 : %d                \n", exp);
-					printf("                                          \n");
-					printf("              └────────────┘\n");
-					int a;
-					printf(" 1. 돌아가기\n");
-					scanf("%d", &a);
+					printf("저장중입니다.");
+					_sleep(500);
 					system("cls");
-					if (a == 1) {
-						secter1();
-					}
+					printf("저장중입니다..");
+					_sleep(500);
+					system("cls");
+					printf("저장중입니다...");
+					_sleep(500);
+					system("cls");
+					printf("저장중입니다....");
+					_sleep(500);
+					system("cls");
+					printf("저장완료!");
+					_sleep(500);
+					printf("게임을 종료합니다.");
+					return 0;
 				}
 				else {
 					if (select1 == 3) {
@@ -124,7 +83,7 @@ int secter1() //1층 스폰
 						printf("2. 조금 더 준비 해볼까..?.\n");
 						scanf("%d", &a);
 						system("cls");
-						if (a == 2) {
+						if (a > 1) {
 							secter1();
 						}
 						else {
@@ -162,12 +121,10 @@ int secter1() //1층 스폰
 						}
 					}
 				}
-
 			}
 		}
 	}
 }
-
 int secter2() //2층 안전지대
 {
 	static int a;
@@ -189,53 +146,16 @@ int secter2() //2층 안전지대
 
 		scanf("%d", &select2);
 		if (select2 == 1) {
-			system("cls");
-			printf("              ┌────────────┐\n");
-			printf("                       캐릭터 장비        \n");
-			printf("                                          \n");
-			if (weapon == 0) { printf("                 무기 : 맨손              \n"); }
-			//printf("                 무기 : 맨손              \n");
-			printf("                                          \n");
-			if (armor == 0) { printf("               방어구 : 앞치마            \n"); }
-			//printf("               방어구 : 앞치마            \n");
-			printf("                                          \n");
-			if (riding == 0) { printf("               라이딩 : 없음              \n"); }
-			//printf("               라이딩 : 없음              \n");
-			printf("                                          \n");
-			printf("              └────────────┘\n");
-			int a;
-			printf("1. 돌아가기\n");
-			scanf("%d", &a);
-			system("cls");
-			a = 0;
+			chequip(2);//캐릭터 장비
 		}
 		else {
 			if (select2 == 2) {
-				system("cls");
-				printf("┌────────────┐\n");
-				printf("         캐릭터 정보        \n");
-				printf("                            \n");
-				printf(" 공격력 : %d                \n", attdm);
-				printf("                            \n");
-				printf(" 방어력 : %d                \n", def);
-				printf("                            \n");
-				printf(" 체력   : %d                \n", hp);
-				printf("                            \n");
-				printf(" 마나   : %d                \n", mp);
-				printf("                            \n");
-				printf("경험치  : %d                \n", exp);
-				printf("                            \n");
-				printf("└────────────┘\n");
-				int a;
-				printf("1. 돌아가기\n");
-				scanf("%d", &a);
-				system("cls");
-				a = 0;
+				chstatus(2);//캐릭터 정보 
 			}
 			else {
 				if (select2 == 3) {
 					system("cls");
-					printf("안에서 수상한 인기척이 느껴집니다\n");
+					printf("안에서 수상한 인기척이 느껴집니다\n\n");
 					_sleep(1000);
 					printf("들어가시겠습니까?\n");
 					_sleep(1000);
@@ -244,7 +164,33 @@ int secter2() //2층 안전지대
 					printf(" 2. 다시 돌아간다\n");
 					int a;
 					scanf("%d", &a);
-					a = 0;
+					if (a == 2) { secter2(); 
+					}
+					else {
+						system("cls");
+						printf(".");
+						_sleep(500);
+						printf(".");
+						_sleep(500);
+						printf(".");
+						_sleep(500);
+						printf(".");
+						_sleep(500);
+						printf("철컥!   ");
+						_sleep(1000);
+						printf("끼");
+						_sleep(500);
+						printf("이");
+						_sleep(500);
+						printf("익");
+						_sleep(500);
+						printf(".");
+						_sleep(500);
+						printf(".");
+						_sleep(500);
+						printf(".");
+						_sleep(500);
+					}
 				}
 			}
 		}
@@ -252,6 +198,79 @@ int secter2() //2층 안전지대
 
 	}
 }
+
+int chstatus(int a)//캐릭터정보
+{
+	static int choose;
+	if (a > 0) {
+		system("cls");
+		printf("              ┌────────────┐\n");
+		printf("                       캐릭터 정보        \n");
+		printf("                                          \n");
+		printf("               레벨 : %d                  \n", level);
+		printf("                                          \n");
+		if (weapon == 0) { printf("               공격력 : 2                \n"); }
+		//printf("               공격력 : %d                \n");
+		printf("                                          \n");
+		if (armor == 0) { printf("               방어력 : 0                \n"); }
+		//printf("               방어력 : %d                \n");
+		printf("                                          \n");
+		if (hp == 0) { printf("               체력   : 15                \n"); }
+		//printf("               체력   : %d                \n");
+		printf("                                          \n");
+		if (mp == 0) { printf("               마나   : 10                \n"); }
+		//printf("               마나   : %d                \n");;
+		printf("                                          \n");
+		printf("               경험치 : %d                \n", xp);
+		printf("                                          \n");
+		printf("              └────────────┘\n");
+		printf("\n 1. 돌아가기\n");
+		scanf("%d", &choose);
+		system("cls");
+		if (a == 1) {
+			secter1();
+		}
+		else {
+			if (a == 2) {
+				secter2();
+			}
+		}
+	}
+	return 0;
+}
+
+int chequip(int a)
+{
+	static int choose;
+	if (a > 0) {
+		system("cls");
+		printf("              ┌────────────┐\n");
+		printf("                       캐릭터 장비        \n");
+		printf("                                          \n");
+		if (weapon == 0) { printf("                 무기 : 맨손              \n"); }
+		//printf("                 무기 : 맨손              \n");
+		printf("                                          \n");
+		if (armor == 0) { printf("               방어구 : 앞치마            \n"); }
+		//printf("               방어구 : 앞치마            \n");
+		printf("                                          \n");
+		if (riding == 0) { printf("               라이딩 : 없음              \n"); }
+		//printf("               라이딩 : 없음              \n");
+		printf("                                          \n");
+		printf("              └────────────┘\n");
+		printf("\n1. 돌아가기\n");
+		scanf("%d", &choose);
+		if (a == 1) {
+			secter1();
+		}
+		else {
+			if (a == 2) {
+				secter2();
+			}
+		}
+	}
+	return 0;
+}
+
 
 int main()
 {
@@ -281,86 +300,90 @@ int main()
 		return 0;
 	}
 	else {
+
 		system("cls");
-		printf("■□□□□");
+		printf("\n\n\n\n\n\n\n\n\n\n\n                                 ■□□□□□");
 		_sleep(500);
 		system("cls");
-		printf("■■□□□");
+		printf("\n\n\n\n\n\n\n\n\n\n\n                                 ■■□□□□");
 		_sleep(500);
 		system("cls");
-		printf("■■■□□");
+		printf("\n\n\n\n\n\n\n\n\n\n\n                                 ■■■□□□");
 		_sleep(500);
 		system("cls");
-		printf("■■■■□");
+		printf("\n\n\n\n\n\n\n\n\n\n\n                                 ■■■■□□");
 		_sleep(500);
 		system("cls");
-		printf("■■■■■");
+		printf("\n\n\n\n\n\n\n\n\n\n\n                                 ■■■■■□");
+		_sleep(1000);
+		system("cls");
+		printf("\n\n\n\n\n\n\n\n\n\n\n                                 ■■■■■■");
 		_sleep(1000);
 		system("cls");
 
 		_sleep(2000);
-		printf("                2");
-		_sleep(100);
+		printf("\n\n\n\n\n\n\n\n\n\n                   2");
+		_sleep(300);
 		printf("2");
-		_sleep(100);
+		_sleep(300);
 		printf("세");
-		_sleep(100);
+		_sleep(300);
 		printf("기 ");
-		_sleep(100);
+		_sleep(300);
 		printf("미");
-		_sleep(100);
+		_sleep(300);
 		printf("래");
-		_sleep(100);
+		_sleep(300);
 		printf("인");
-		_sleep(100);
+		_sleep(300);
 		printf("간 ");
-		_sleep(100);
+		_sleep(300);
 		printf("안");
-		_sleep(100);
+		_sleep(300);
 		printf("상");
-		_sleep(100);
+		_sleep(300);
 		printf("근");
-		_sleep(100);
+		_sleep(300);
 		printf("의 ");
-		_sleep(100);
+		_sleep(300);
 		printf("지");
-		_sleep(100);
+		_sleep(300);
 		printf("구");
-		_sleep(100);
+		_sleep(300);
 		printf("종");
-		_sleep(100);
+		_sleep(300);
 		printf("말 ");
-		_sleep(100);
+		_sleep(300);
 		printf("생");
-		_sleep(100);
+		_sleep(300);
 		printf("존");
-		_sleep(100);
+		_sleep(300);
 		printf("기");
-		_sleep(100);
+		_sleep(300);
 		printf("!");
-		_sleep(100);
+		_sleep(300);
 		system("cls");
-		printf("                22세기 미래인간 안상근의 지구종말 생존기!");
+		printf("\n\n\n\n\n\n\n\n\n\n                   22세기 미래인간 안상근의 지구종말 생존기!");
 		_sleep(500);
 		system("cls");
 		printf(" ");
 		_sleep(500);
 		system("cls");
-		printf("                22세기 미래인간 안상근의 지구종말 생존기!");
+		printf("\n\n\n\n\n\n\n\n\n\n                   22세기 미래인간 안상근의 지구종말 생존기!");
 		_sleep(500);
 		system("cls");
 		printf(" ");
 		_sleep(500);
 		system("cls");
-		printf("                22세기 미래인간 안상근의 지구종말 생존기!");
+		printf("\n\n\n\n\n\n\n\n\n\n                   22세기 미래인간 안상근의 지구종말 생존기!");
 		_sleep(500);
 		system("cls");
 		printf(" ");
 		_sleep(500);
 		system("cls");
-		printf("                22세기 미래인간 안상근의 지구종말 생존기!\n\n");
+		printf("\n\n\n\n\n\n\n\n\n\n                   22세기 미래인간 안상근의 지구종말 생존기!\n\n");
 		_sleep(1500);
-		printf("                                시작합니다!");
+		printf("\n\n\n\n\n\n                                   시작합니다!");
 		_sleep(1000);
 		secter1();
 
