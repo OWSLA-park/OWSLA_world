@@ -4,14 +4,17 @@
 #include <Windows.h>
 #pragma warning(disable:4996)
 
-//해야할일 : 전투 후 돌아갈곳 정하기
+//해야할일 : 전투 후 돌아갈곳 정하기 꼭
 
+
+int liquor; // 강화재료
+int getitem; // 아이템 습득 확률
 int dobatt; //스킬 연속공격
 int tumble; // 스킬 공중제비
 int level; //레벨
 int save; //저장
 int load; //불러오기
-int attdm; //몹에게 가하는 데미지 (0 = 2) (1 = 5) (2 = 9) (3 = 13) (4 = 17) (5 = 22) (6 = ??~??)
+int attdm; //몹에게 가하는 데미지 (0 = 2) (1 = 5) (2 = 11) (3 = 17) (4 = 23) (5 = 29) (6 = ??~??)
 int att; //공격력
 int	def; //방어력 (0 = 0) (1 = 2) (2 = 6) (3 = 10) (4 = 15) (5 = 19) (6 = ??)durable
 int dex; //민첩공격
@@ -21,7 +24,7 @@ int xp; //경험치
 int weapon; //무기 (0 = 맨손) (1 = 커튼봉) (2 = 쇠파이프) (3 = 골프채) (4 = 녹슨 진검) (5 = 날카로운 진검) (6 = 딜도)
 int armor; //방어구 (0 = 앞치마) (1 = 동물 잠옷) (2 = 청바지 청자켓) (3 = 롱패딩) (4 = 두꺼운 검도복) (5 = 신형 전투복) (6 = 전신 타이즈)
 int riding; //탈것 (0 = 없음) (1 = 인라인스케이트) (2 = 킥보드) (3 = 악센트) (3 = K3) (4 = 두돈반)
-int potion; // 물약
+int potion; // 물약 체력 + 마나
 int mobhp; //몬스터체력
 int mobmp; //몬스터 마나
 int mobatt; //몬스터 공격력
@@ -52,60 +55,50 @@ int secter1() //1층 스폰
 		printf(" 5. 저장하고 종료하기(미구현)\n");
 
 		scanf("%d", &select1);
-		if (select1 == 4) {
-			if (level < 7) { 
-				printf("일단 아파트에서 쓸만한 장비를 갖춰야 한다.");
-				_sleep(1500);
-				secter1();
-			}
-		}
 		if (select1 == 1) {
 			chequip(1);//캐릭터 장비
 		}
-		else {
-			if (select1 == 2) {
-				chstatus(1);//캐릭터 정보 
+		if (select1 == 2) {
+			chstatus(1);//캐릭터 정보 
+		}
+		if (select1 == 5) {
+			system("cls");
+			printf("저장중입니다.");
+			_sleep(500);
+			system("cls");
+			printf("저장중입니다..");
+			_sleep(500);
+			system("cls");
+			printf("저장중입니다...");
+			_sleep(500);
+			system("cls");
+			printf("저장중입니다....");
+			_sleep(500);
+			system("cls");
+			printf("저장완료!\n");
+			_sleep(500);
+			printf("게임을 종료합니다.\n");
+			return 0;//게임종료
+		}
+		if (select1 == 3) {
+			system("cls");
+			printf("뒤쪽에 반쯤 부서진 아파트 계단이 보인다.\n\n");
+			_sleep(1000);
+			printf("계단 윗쪽에서 알수없는 인기척이 느껴진다.\n\n");
+			_sleep(1000);
+			printf("올라가시겠습니까?.\n");
+			_sleep(1000);
+			printf("==============================\n");
+			int a = 0;
+			printf("1. 두렵지만 일단 올라간다.\n");
+			printf("\n");
+			printf("2. 조금 더 준비 해볼까..?.\n");
+			scanf("%d", &a);
+			system("cls");
+			if (a > 1) {
+				secter1();// 돌아가기
 			}
-			else {
-				if (select1 == 5) {
-					system("cls");
-					printf("저장중입니다.");
-					_sleep(500);
-					system("cls");
-					printf("저장중입니다..");
-					_sleep(500);
-					system("cls");
-					printf("저장중입니다...");
-					_sleep(500);
-					system("cls");
-					printf("저장중입니다....");
-					_sleep(500);
-					system("cls");
-					printf("저장완료!");
-					_sleep(500);
-					printf("게임을 종료합니다.");
-					return 0;//게임종료
-				}
-				else {
-					if (select1 == 3) {
-						system("cls");
-						printf("뒤쪽에 반쯤 부서진 아파트 계단이 보인다.\n\n");
-						_sleep(1000);
-						printf("계단 윗쪽에서 알수없는 인기척이 느껴진다.\n\n");
-						_sleep(1000);
-						printf("올라가시겠습니까?.\n");
-						_sleep(1000);
-						printf("==============================\n");
-						int a = 0;
-						printf("1. 두렵지만 일단 올라간다.\n");
-						printf("\n");
-						printf("2. 조금 더 준비 해볼까..?.\n");
-						scanf("%d", &a);
-						system("cls");
-						if (a > 1) {
-							secter1();// 돌아가기
-						}
-						else {
+			if (a == 1) {
 							system("cls");
 							_sleep(500);
 							printf("터벅.");
@@ -139,11 +132,8 @@ int secter1() //1층 스폰
 							secter2(); //2층으로
 						}
 					}
-				}
-			}
 		}
 	}
-}
 int secter2() //2층 안전지대
 {
 	static int a, b, c, d, e, f;
@@ -313,7 +303,7 @@ int secter2() //2층 안전지대
 								weapon = 1;
 								printf(" [커튼봉] 을 장착했다!\n\n");
 								_sleep(1000);
-								printf(" 공격력이 증가했다!   공격력 3 -> 5");
+								printf(" 공격력이 증가했다!   공격력 2 -> 5");
 								_sleep(2000);
 								att = 5;
 								system("cls");
@@ -361,6 +351,57 @@ int secter2() //2층 안전지대
 									printf("1. 안방으로 들어가본다\n");
 									printf("2. 무서우니 거실 구석에 웅크린다\n");
 									scanf("%d", &d);
+									if (d == 2) printf("겁쟁이는 나가리"); exit(0);
+									if (d == 1) {
+										system("cls");
+										printf("끼");
+										_sleep(300);
+										printf("이");
+										_sleep(300);
+										printf("익");
+										_sleep(300);
+										printf(".");
+										_sleep(300);
+										printf(".");
+										_sleep(300);
+										printf(".");
+										_sleep(300);
+										printf(".\n\n");
+										printf("조심스럽게 안방 문을 열었다...\n\n");
+										_sleep(1000);
+										printf("그 순간!\n\n");
+										_sleep(1300);
+										printf("나는 입을 틀어막았다..!\n\n");
+										_sleep(1300);
+										printf("내 앞에 있는건\n\n");
+										_sleep(1300);
+										printf("설사를 질질 흘리고있는\n\n");
+										_sleep(1300);
+										printf("심각한 탈수증세로 마치 좀비처럼 이성을 잃은\n\n");
+										_sleep(1300);
+										printf("인간의 모습을 한 짐승이었다....\n\n");
+										_sleep(1300);
+										printf("내가 당황하는 사이,   그녀석은 나를 발견하고 점점 다가왔다...!\n\n");
+										printf("[1 . 싸운다!]\n");
+										printf("[2 . 도망친다..]\n");
+										scanf("%d", &e);
+										if (e == 2) {
+											if (dex >= 1) {
+												system("cls"); printf("무사히 도망쳤다!");
+												secter2();
+											}
+											else {
+												if (dex < 1) {
+													system("cls");
+													printf("도망칠 수 없다!");
+													mobstatus(1);
+												}
+											}
+										}
+										else {
+											mobstatus(1);
+										}
+									}
 								}
 								if (d == 1) {
 									system("cls");
@@ -524,18 +565,39 @@ int chequip(int a)
 int mobstatus(int mobstat)
 {
 	if (mobstat == 1) {
+		system("cls");
+		printf("[녹아내린 인간] 이(가) 나타났다!\n\n");
+		_sleep(1500);
+		system("cls");
 		//녹아내린 인간
 		mobhp = 15;
-		mobmp = 10;
+		mobmp = 0;
 		mobatt = 3;
 		firstbattle();
 		return 0;
 	}
 	if (mobstat == 2) {
-		//뒤틀린 인간
+		system("cls");
+		printf("[뒤틀린 시체] 이(가) 나타났다!\n\n");
+		_sleep(1500);
+		system("cls");
+		//뒤틀린 시체
 		mobhp = 23;
-		mobmp = 10;
+		mobmp = 0;
 		mobatt = 8;
+		return 0;
+	}
+	if (mobstat == 3) {
+		system("cls");
+		printf("[부풀어오른 시체] 이(가) 나타났다!\n\n");
+		_sleep(1500);
+		ntf("[부풀어오른 시체] 이(가) 곧 터질것 처럼 위태롭다!\n\n");
+		_sleep(1500);
+		system("cls");
+		//부풀어오른 시체 (죽으면 터지면서 데미지)
+		mobhp = 10;
+		mobmp = 0;
+		mobatt = 5;
 		return 0;
 	}
 }
@@ -546,7 +608,7 @@ int firstbattle()
 	while (1)
 	{
 		system("cls");
-		if (hp <= 0) hp = 25, mp = 10, mobhp = 15;
+		if (hp <= 0) { hp = 25, mp = 10, mobhp = 15; }
 		_sleep(1000);
 		system("cls");
 		printf("┌────────┐         ┌────────┐\n");
@@ -578,23 +640,30 @@ int firstbattle()
 			system("cls");
 		}
 		if (a == 2) {
-			system("cls");
-			printf("[녹아내린 인간] 에게 [연속공격] 스킬사용!\n\n");
-			_sleep(1500);
-			mp = mp - 6;
-			dobatt = rand() % att + 1;
-			mobhp -= dobatt;
-			printf("[녹아내린 인간] 에게 %d 데미지!\n\n", dobatt);
-			_sleep(1500);
-			dobatt = rand() % att + 1;
-			mobhp -= dobatt;
-			printf("[녹아내린 인간] 에게 %d 데미지!\n\n", dobatt);
-			mobattdm = rand() % mobatt + 1;
-			hp -= mobattdm;
-			_sleep(1500);
-			printf("[안상근] 에게 %d 데미지!\n\n", mobattdm);
-			_sleep(1500);
-			system("cls");
+			if (mp < 6) { 
+				system("cls");
+				printf("마나가 부족합니다.");
+				_sleep(1000);
+			}
+			else {
+				system("cls");
+				printf("[녹아내린 인간] 에게 [연속공격] 스킬사용!\n\n");
+				_sleep(1500);
+				mp = mp - 6;
+				dobatt = rand() % att + 1;
+				mobhp -= dobatt;
+				printf("[녹아내린 인간] 에게 %d 데미지!\n\n", dobatt);
+				_sleep(1500);
+				dobatt = rand() % att + 1;
+				mobhp -= dobatt;
+				printf("[녹아내린 인간] 에게 %d 데미지!\n\n", dobatt);
+				mobattdm = rand() % mobatt + 1;
+				hp -= mobattdm;
+				_sleep(1500);
+				printf("[안상근] 에게 %d 데미지!\n\n", mobattdm);
+				_sleep(1500);
+				system("cls");
+			}
 		}
 		if (hp < 0) {
 			system("cls");
@@ -614,11 +683,26 @@ int firstbattle()
 			xp = rand() % 5 + 1;
 			printf("%d 의 경험치를 획득했다!\n\n", xp);
 			_sleep(1500);
+			getitem = rand() % 10 + 1;
+			if (getitem < 6) break;
+			if (getitem > 5) {
+				system("cls");
+				printf("몬스터가 있던 자리에\n\n");
+				_sleep(1000);
+				printf("[고량주] 한병이 놓여있다.\n\n");
+				_sleep(1000);
+				printf("일단 챙겨두자\n\n");
+				_sleep(1000);
+				printf("[고량주] 한병을 획득했다!\n\n");
+				_sleep(1000);
+				liquor++;
+				if (mobhp <= 0) break;
+			}
 		}
 	}
-
-	secter2();
-	return 0;
+	system("cls");
+	printf("겨우 제압했다...\n\n");
+	_sleep(1000);
 }
 
 
