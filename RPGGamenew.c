@@ -10,7 +10,12 @@
 int liquor; // 강화재료
 int getitem; // 아이템 습득 확률
 int dobatt; //스킬 연속공격
-int tumble; // 스킬 공중제비
+int round; //공중제비 바퀴수
+int tumble1;// 스킬 공중제비
+int tumble2;
+int tumble3;
+int tumble4;
+int skilldm;
 int level; //레벨
 int save; //저장
 int load; //불러오기
@@ -29,7 +34,9 @@ int armor; //방어구 (0 = 앞치마) (1 = 동물 잠옷) (2 = 청바지 청자
 int riding; //탈것 (0 = 없음) (1 = 인라인스케이트) (2 = 킥보드) (3 = 악센트) (3 = K3) (4 = 두돈반)
 int potion; // 물약 체력 + 마나
 int detoxpotion; // 해독물약
-int randmob; 
+int randmob;
+int maxmobhp;
+int maxmobmp;
 int mobhp; //몬스터체력
 int mobmp; //몬스터 마나
 int mobatt; //몬스터 공격력
@@ -40,7 +47,7 @@ int select0;
 int select1;
 int select2;
 int select3;
-int stack;
+int stack;//전투 했는지 안했는지 확인
 
 int secter1() //1층 스폰
 {
@@ -207,10 +214,7 @@ int secter2() //2층 안전지대
 					if (stack > 0){ 
 						system("cls");
 						printf("이미 진행한 구역입니다.\n\n");
-						_sleep(1000);
-				printf("전투만 다시 진행합니다.");
-				_sleep(1000);
-				mobstatus();
+						_sleep(1500);
 				}
 					else {
 						system("cls");
@@ -632,6 +636,7 @@ int mobstatus()
 		mobhp = 23;
 		mobmp = 0;
 		mobatt = 5;
+		battletwo(1);
 	}
 	if (randmob == 2) {
 		system("cls");
@@ -644,10 +649,11 @@ int mobstatus()
 		mobhp = 10;
 		mobmp = 0;
 		mobatt = 3;
+		battletwo(2);
 	}
 	if (randmob == 3) {
 		system("cls");
-		printf("[맹독 시체] 이(가) 나타났다!\n\n");
+		printf("[썩은 시체] 이(가) 나타났다!\n\n");
 		_sleep(1500);
 		printf("이녀석은 유난히 악취가 심하다\n\n");
 		_sleep(1500);
@@ -656,35 +662,85 @@ int mobstatus()
 		mobhp = 30;
 		mobmp = 0;
 		mobatt = 8;
+		battletwo(3);
 	}
-	battletwo();
 	return 0;
 }
 
-int battletwo()
+int tumble()
+{
+	round = rand() % 3;
+	tumble1 = rand() % att + 1;
+	tumble2 = rand() % att + 1;
+	tumble3 = rand() % att + 1;
+	tumble4 = rand() % att + 1;
+
+	if (round == 0) {
+		system("cls");
+		printf("휘릭~\n\n");
+		_sleep(1500);
+		printf("히릿~\n\n");
+		_sleep(1500);
+		printf("두바퀴 돌았다!");
+	}
+	if (round == 1) {
+		system("cls");
+		printf("휘릭~\n\n");
+		_sleep(1500);
+		printf("히릿~\n\n");
+		_sleep(1500);
+		printf("히익~\n\n");
+		_sleep(1500);
+		printf("세바퀴 돌았다!");
+	}
+	if (round == 2) {
+		system("cls");
+		printf("휘릭~\n\n");
+		_sleep(1500);
+		printf("히릿~\n\n");
+		_sleep(1500);
+		printf("히익~\n\n");
+		_sleep(1500);
+		printf("응기잇~\n\n");
+		_sleep(1500);
+		printf("네바퀴 돌았다!");
+	}
+	return 0;
+}
+
+int battletwo(int mobselect)
 {
 	static int a, b, c;
 	while (1)
 	{
 		system("cls");
-		if (hp < 25) { hp = 25, mp = 10; }
+		if (hp < maxhp) { hp = maxhp, mp = maxmp; }
 		_sleep(1000);
 		system("cls");
 		printf("┌────────┐         ┌────────┐\n");
-		printf("       안상근                    녹아내린 인간   \n");
+		if (mobselect == 1) printf("       안상근                    뒤틀린 시체   \n");
+		if (mobselect == 1) printf("       안상근                   부풀어오른 시체   \n");
+		if (mobselect == 1) printf("       안상근                     썩은 시체   \n");
 		printf("                                                 \n");
 		printf("        H P                           H P        \n");
-		printf("    [ 25 / %d ]                   [ 15 / %d ]    \n", hp, mobhp);
+		printf("    [ %d / %d ]                   [ %d / %d ]    \n",maxhp, hp, maxmobhp, mobhp);
 		printf("                                                 \n");
 		printf("        M P                           M P        \n");
-		printf("    [ 10 / %d ]                    [ 0 / 0 ]    \n", mp);
+		printf("    [ %d / %d ]                   [ %d / %d ]    \n",maxmp, mp, maxmobmp, mobmp);
 		printf("                                                 \n");
 		printf("└────────┘         └────────┘\n\n");
 		printf("1. 기본공격\n");
 		if (mp >= 6) printf("2. 스킬 : 연속공격\n");
 		if (mp >= 12) printf("3. 스킬 : 공중제비\n");
 		scanf("%d", &a);
+		if (a == 3) {
+			system("cls");
+			printf("[안상근] 는(은) 흥분한 나머지 [공중제비] 를 돌았다!");
+			tumble();
+			if (mobselect == 1) { printf("[뒤틀린 시체] 에게 %d 데미지!", ); }
+		}
 	}
+
 }
 
 int firstbattle()
@@ -808,6 +864,17 @@ int firstbattle()
 
 int levelsystem()
 {
+	if (xp > 100) {
+		level++;
+		att += 2;
+		def += 1;
+		dex += 1;
+		maxhp += 9;
+		maxmp += 5;
+		hp = maxhp;
+		mp = maxmp;
+		exit(0);
+	}
 	if (xp > 50) {
 		level++;
 		att += 2;
