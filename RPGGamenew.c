@@ -204,7 +204,7 @@ int secter2() //2층 안전지대
 					mobstatus();
 				}
 				system("cls");
-				partial("[202호 열쇠] 를 사용했습니다!");
+				printf("[202호 열쇠] 를 사용했습니다!");
 				_sleep(1000);
 
 				printf("손에 무기를 꽉 쥐고\n\n");
@@ -783,6 +783,13 @@ int battletwo(int mobselect)
 		if (mp >= 6) printf("2. 스킬 : 연속공격\n");
 		if (mp >= 12) printf("3. 스킬 : 공중제비\n");
 		scanf("%d", &a);
+		if (a == 1) {
+			system("cls");
+			printf("[안상근] 은(는) 무기를 휘둘렀다!");
+			_sleep(1000);
+			printf("적에게 %d 데미지!");
+
+		}
 		if (a == 2) {
 			if (mp < 6) { 
 				printf("마나가 부족합니다.");
@@ -840,7 +847,7 @@ int battletwo(int mobselect)
 	}
 	system("cls");
 	printf("적을 제압했다!");
-	xp = 
+	xp = rand() % level + 3;
 	if (hp < maxhp) { hp = maxhp, mp = maxmp; }
 	poison = 0;
 	return 0;
