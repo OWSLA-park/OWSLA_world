@@ -8,6 +8,8 @@
 
 
 int liquor; // 강화재료
+int weaponlevel; // 강화단계
+int needliquor; //필요갯수
 int getitem; // 아이템 습득 확률
 int dobatt; //스킬 연속공격
 int round; //공중제비 바퀴수
@@ -20,7 +22,7 @@ int level; //레벨
 int save; //저장
 int load; //불러오기
 int attdm; //몹에게 가하는 데미지 (0 = 2) (1 = 5) (2 = 11) (3 = 17) (4 = 23) (5 = 29) (6 = ??~??)
-int att; //공격력
+int att; //공격력 
 int	def; //방어력 (0 = 0) (1 = 2) (2 = 6) (3 = 10) (4 = 15) (5 = 19) (6 = ??)durable
 int dex; //민첩 (공격회피확률)
 int maxhp; //레벨비례 체력량
@@ -50,6 +52,7 @@ int select1;
 int select2;
 int select3;
 int stack;//전투 했는지 안했는지 확인
+int chance;
 
 int secter1() //1층 스폰
 {
@@ -116,41 +119,41 @@ int secter1() //1층 스폰
 				secter1();// 돌아가기
 			}
 			if (a == 1) {
-							system("cls");
-							_sleep(500);
-							printf("터벅.");
-							_sleep(500);
-							system("cls");
-							printf("터벅..");
-							_sleep(500);
-							system("cls");
-							printf("터벅...");
-							_sleep(500);
-							system("cls");
-							printf("터벅...  터벅");
-							_sleep(500);
-							system("cls");
-							printf("터벅...  터벅.");
-							_sleep(500);
-							system("cls");
-							printf("터벅...  터벅..");
-							_sleep(500);
-							system("cls");
-							printf("터벅...  터벅...\n\n");
-							_sleep(1000);
-							printf("한칸씩 숨죽이며 천천히 올라간다.\n\n");
-							_sleep(1000);
-							printf("거의 다왔을 때 쯤\n\n");
-							_sleep(1000);
-							printf("눈앞에 펼쳐진건\n\n");
-							_sleep(1000);
-							printf("여기저기 부서지고 시체들이 널브러진 난장판이었다.\n");
-							_sleep(1500);
-							secter2(); //2층으로
-						}
-					}
+				system("cls");
+				_sleep(500);
+				printf("터벅.");
+				_sleep(500);
+				system("cls");
+				printf("터벅..");
+				_sleep(500);
+				system("cls");
+				printf("터벅...");
+				_sleep(500);
+				system("cls");
+				printf("터벅...  터벅");
+				_sleep(500);
+				system("cls");
+				printf("터벅...  터벅.");
+				_sleep(500);
+				system("cls");
+				printf("터벅...  터벅..");
+				_sleep(500);
+				system("cls");
+				printf("터벅...  터벅...\n\n");
+				_sleep(1000);
+				printf("한칸씩 숨죽이며 천천히 올라간다.\n\n");
+				_sleep(1000);
+				printf("거의 다왔을 때 쯤\n\n");
+				_sleep(1000);
+				printf("눈앞에 펼쳐진건\n\n");
+				_sleep(1000);
+				printf("여기저기 부서지고 시체들이 널브러진 난장판이었다.\n");
+				_sleep(1500);
+				secter2(); //2층으로
+			}
 		}
 	}
+}
 int secter2() //2층 안전지대
 {
 	static int a, b, c, d, e, f, g;
@@ -181,7 +184,9 @@ int secter2() //2층 안전지대
 			printf(" 1. 들어간다\n");
 			printf(" 2. 다시 돌아간다\n");
 			scanf("%d", &g);
-			if (g == 2) secter2();
+			if (g == 2) {
+				secter2();
+			}
 			if (g == 1) {
 				if (stack == 0) {
 					system("cls");
@@ -204,9 +209,8 @@ int secter2() //2층 안전지대
 					mobstatus();
 				}
 				system("cls");
-				printf("[202호 열쇠] 를 사용했습니다!");
+				printf("[202호 열쇠] 를 사용했습니다!\n\n");
 				_sleep(1000);
-
 				printf("손에 무기를 꽉 쥐고\n\n");
 				_sleep(1500);
 				printf("문을 벌컥! 열었다\n\n");
@@ -218,129 +222,127 @@ int secter2() //2층 안전지대
 				mobstatus();
 			}
 		}
-		if (select2 == 6) secter1();
+		if (select2 == 6) {
+			secter1();
+		}
 		if (select2 == 1) {
 			chequip(2);//캐릭터 장비
 		}
-		else {
-			if (select2 == 2) {
-				chstatus(2);//캐릭터 정보 
+		if (select2 == 2) {
+			chstatus(2);//캐릭터 정보 
+		}
+		if (select2 == 3) {
+			if (stack > 0) {
+				system("cls");
+				printf("이미 진행한 구역입니다.\n\n");
+				_sleep(1500);
+				secter2();
 			}
-			else {
-				if (select2 == 3)
-					if (stack > 0){ 
+			system("cls");
+			printf("문 안쪽에서 고약한 악취가 납니다.\n\n");
+			_sleep(1000);
+			printf("들어가시겠습니까?\n");
+			_sleep(1000);
+			printf("==============================\n");
+			printf(" 1. 들어간다\n");
+			printf(" 2. 다시 돌아간다\n");
+			int a;
+			scanf("%d", &a);
+			if (a == 2) {
+				secter2(); //다시 돌아가기
+			}
+			if (a == 1) {
+				system("cls");
+				printf(".");
+				_sleep(500);
+				printf(".");
+				_sleep(500);
+				printf(".");
+				_sleep(500);
+				printf(".");
+				_sleep(500);
+				printf("철컥!   ");
+				_sleep(1000);
+				printf("끼");
+				_sleep(300);
+				printf("이");
+				_sleep(300);
+				printf("익");
+				_sleep(300);
+				printf(".");
+				_sleep(300);
+				printf(".");
+				_sleep(300);
+				printf(".");
+				_sleep(300);
+				printf(".\n\n");
+				_sleep(1000);
+				printf("문을 열자마자 밀려오는 악취와\n\n");
+				_sleep(1000);
+				printf("눈앞에 널브러진 시체 때문에\n\n");
+				_sleep(1000);
+				printf("내 표정은 저절로 일그러졌다.\n\n");
+				_sleep(1000);
+				printf("그것과 동시에 집 안쪽에서부터 느껴지는 알수없는 인기척.");
+				_sleep(500);
+				printf(".");
+				_sleep(500);
+				printf(".");
+				_sleep(1000);
+				printf("\n\n");
+				printf("일단 내 몸을 지킬 무기를 찾아야한다\n");
+				_sleep(1000);
+				printf("===================================================\n");
+				printf("1. 거실로 진입한다.\n");
+				printf("2. 다시 밖으로 나간다.\n");
+				scanf("%d", &b);
+				if (b == 2)secter2();//돌아가기
+				if (b == 1) {
+					system("cls");
+					printf("살금");
+					_sleep(300);
+					printf(".");
+					_sleep(300);
+					printf(".");
+					_sleep(300);
+					printf(".");
+					_sleep(300);
+					printf(".   ");
+					_sleep(300);
+					printf("살금");
+					_sleep(300);
+					printf(".");
+					_sleep(300);
+					printf(".");
+					_sleep(300);
+					printf(".");
+					_sleep(300);
+					printf(".\n\n");
+					_sleep(1000);
+					printf("소리를 죽이고 조심스럽게 거실로 진입했다.\n\n");
+					_sleep(1500);
+					printf("거실 한구석에 커튼봉이 떨어져있다.\n\n");
+					_sleep(1500);
+					printf("튼튼하지는 않지만 없는것 보다는 나을것같다.\n\n");
+					_sleep(1500);
+					printf("===================================================\n");
+					printf("1. [커튼봉] 을 장비한다.\n\n");
+					printf("2. 필요없다! 난 양주시 꿀주먹이니까!.\n\n");
+					scanf("%d", &c);
+					if (c == 2) {
 						system("cls");
-						printf("이미 진행한 구역입니다.\n\n");
+						printf("지랄말고 껴라\n\n");
 						_sleep(1500);
-						secter2();
-				    }
-					else {
-						system("cls");
-						printf("문 안쪽에서 고약한 악취가 납니다.\n\n");
-						_sleep(1000);
-						printf("들어가시겠습니까?\n");
-						_sleep(1000);
-						printf("==============================\n");
-						printf(" 1. 들어간다\n");
-						printf(" 2. 다시 돌아간다\n");
-						int a;
-						scanf("%d", &a);
-					}
-					if (a == 2) { secter2(); //다시 돌아가기
-					}
-					else {
-						system("cls");
-						printf(".");
-						_sleep(500);
-						printf(".");
-						_sleep(500);
-						printf(".");
-						_sleep(500);
-						printf(".");
-						_sleep(500);
-						printf("철컥!   ");
-						_sleep(1000);
-						printf("끼");
-						_sleep(300);
-						printf("이");
-						_sleep(300);
-						printf("익");
-						_sleep(300);
-						printf(".");
-						_sleep(300);
-						printf(".");
-						_sleep(300);
-						printf(".");
-						_sleep(300);
-						printf(".\n\n");
-						_sleep(1000);
-						printf("문을 열자마자 밀려오는 악취와\n\n");
-						_sleep(1000);
-						printf("눈앞에 널브러진 시체 때문에\n\n");
-						_sleep(1000);
-						printf("내 표정은 저절로 일그러졌다.\n\n");
-						_sleep(1000);
-						printf("그것과 동시에 집 안쪽에서부터 느껴지는 알수없는 인기척.");
-						_sleep(500);
-						printf(".");
-						_sleep(500);
-						printf(".");
-						_sleep(1000);
-						printf("\n\n");
-						printf("일단 내 몸을 지킬 무기를 찾아야한다\n");
-						_sleep(1000);
+						printf("말 안들으면 게임 꺼버린다\n\n");
+						_sleep(1500);
 						printf("===================================================\n");
-						printf("1. 거실로 진입한다.\n");
-						printf("2. 다시 밖으로 나간다.\n");
-						scanf("%d", &b);
-						if (b == 2) {
-							secter2();//돌아가기
-						}
-						if (b == 1) {
-							system("cls");
-							printf("살금");
-							_sleep(300);
-							printf(".");
-							_sleep(300);
-							printf(".");
-							_sleep(300);
-							printf(".");
-							_sleep(300);
-							printf(".   ");
-							_sleep(300);
-							printf("살금");
-							_sleep(300);
-							printf(".");
-							_sleep(300);
-							printf(".");
-							_sleep(300);
-							printf(".");
-							_sleep(300);
-							printf(".\n\n");
-							_sleep(1000);
-							printf("소리를 죽이고 조심스럽게 거실로 진입했다.\n\n");
-							_sleep(1500);
-							printf("거실 한구석에 커튼봉이 떨어져있다.\n\n");
-							_sleep(1500);
-							printf("튼튼하지는 않지만 없는것 보다는 나을것같다.\n\n");
-							_sleep(1500);
-							printf("===================================================\n");
-							printf("1. [커튼봉] 을 장비한다.\n\n");
-							printf("2. 필요없다! 난 양주시 꿀주먹이니까!.\n\n");
-							scanf("%d", &c);
-							if (c == 2) {
+						printf("1. ㅈㅅ 끼겠음.\n\n");
+						printf("2. 내가 왜 말을 들어야하지?.\n\n");
+						scanf("%d", &f);
+						if (f == 2) {
+							system("cls"); printf("걍 하지마셈~"); _sleep(1500); exit(0);
+							if (f == 1) {
 								system("cls");
-								printf("지랄말고 껴라\n\n");
-								_sleep(1500);
-								printf("말 안들으면 게임 꺼버린다\n\n");
-								_sleep(1500);
-								printf("===================================================\n");
-								printf("1. ㅈㅅ 끼겠음.\n\n");
-								printf("2. 내가 왜 말을 들어야하지?.\n\n");
-								scanf("%d", &f);
-								if (f == 2) system("cls"); printf("걍 하지마셈~"); _sleep(1500); exit(0);
-								if (f == 1) 
-									system("cls");
 								weapon = 1;
 								printf(" [커튼봉] 을 장착했다!\n\n");
 								_sleep(1000);
@@ -361,14 +363,47 @@ int secter2() //2층 안전지대
 								printf("2. 무서우니 거실 구석에 웅크린다\n");
 								scanf("%d", &d);
 							}
-							if (c == 1) {
+						}
+						if (c == 1) {
+							system("cls");
+							weapon = 1;
+							printf(" [커튼봉] 을 장착했다!\n\n");
+							_sleep(1000);
+							printf(" 공격력이 증가했다!   공격력 2 -> 5");
+							_sleep(2000);
+							att = 5;
+							system("cls");
+							printf("거실을 둘러보던 도중에\n\n");
+							_sleep(1000);
+							printf("안방에서 발소리가 들렸다\n\n");
+							_sleep(1000);
+							printf("\"또다른 생존자가 있는걸까...?\"\n\n");
+							_sleep(1000);
+							printf("\"확인하려면 가봐야겠지...\"\n\n");
+							_sleep(1000);
+							printf("===================================\n");
+							printf("1. 안방으로 들어가본다\n");
+							printf("2. 무서우니 거실 구석에 웅크린다\n");
+							scanf("%d", &d);
+							if (d == 2) {
 								system("cls");
-								weapon = 1;
-								printf(" [커튼봉] 을 장착했다!\n\n");
+								printf("당신은 구석으로 걸어가던 도중\n\n");
 								_sleep(1000);
-								printf(" 공격력이 증가했다!   공격력 2 -> 5");
+								printf("전선에 발이 걸려서 튀어나온 철근 위로 넘어졌습니다(상근 철근ㅋ)");
+								_sleep(1500);
+								system("cls");
+								printf("\n\n\n\n           y   y   ooo    u     u     ddddd    iiiiiiii   eeeeeee                       \n");
+								printf("            y y   o   o   u     u     d    d      ii      e                             \n");
+								printf("             y   o     o  u     u     d     d     ii      eeeeeee                       \n");
+								printf("             y    o   o    u   u      d    d      ii      e                             \n");
+								printf("             y     ooo      uuu       ddddd    iiiiiiii   eeeeeee                       \n");
+								_sleep(3000);
+								system("cls");
+								printf("\n\n\n\n\n\n\n\n\n\n\"인간이 왜 잘못된 선택을 할까요? 직관을 믿기 때문이죠\"\n");
+								printf("                                -마이클 루이스-\n\n");
+								_sleep(2500);
+								printf("다시 선택해보세요");
 								_sleep(2000);
-								att = 5;
 								system("cls");
 								printf("거실을 둘러보던 도중에\n\n");
 								_sleep(1000);
@@ -382,90 +417,7 @@ int secter2() //2층 안전지대
 								printf("1. 안방으로 들어가본다\n");
 								printf("2. 무서우니 거실 구석에 웅크린다\n");
 								scanf("%d", &d);
-								if (d == 2) {
-									system("cls");
-									printf("당신은 구석으로 걸어가던 도중\n\n");
-									_sleep(1000);
-									printf("전선에 발이 걸려서 튀어나온 철근 위로 넘어졌습니다(상근 철근ㅋ)");
-									_sleep(1500);
-									system("cls");
-									printf("\n\n\n\n           y   y   ooo    u     u     ddddd    iiiiiiii   eeeeeee                       \n");
-									printf("            y y   o   o   u     u     d    d      ii      e                             \n");
-									printf("             y   o     o  u     u     d     d     ii      eeeeeee                       \n");
-									printf("             y    o   o    u   u      d    d      ii      e                             \n");
-									printf("             y     ooo      uuu       ddddd    iiiiiiii   eeeeeee                       \n");
-									_sleep(3000);
-									system("cls");
-									printf("\n\n\n\n\n\n\n\n\n\n\"인간이 왜 잘못된 선택을 할까요? 직관을 믿기 때문이죠\"\n");
-									printf("                                -마이클 루이스-");
-									_sleep(2500);
-									printf("다시 선택해보세요");
-									_sleep(2000);
-									system("cls");
-									printf("거실을 둘러보던 도중에\n\n");
-									_sleep(1000);
-									printf("안방에서 발소리가 들렸다\n\n");
-									_sleep(1000);
-									printf("\"또다른 생존자가 있는걸까...?\"\n\n");
-									_sleep(1000);
-									printf("\"확인하려면 가봐야겠지...\"\n\n");
-									_sleep(1000);
-									printf("===================================\n");
-									printf("1. 안방으로 들어가본다\n");
-									printf("2. 무서우니 거실 구석에 웅크린다\n");
-									scanf("%d", &d);
-									if (d == 2) printf("겁쟁이는 나가리"); exit(0);
-									if (d == 1) {
-										system("cls");
-										printf("끼");
-										_sleep(300);
-										printf("이");
-										_sleep(300);
-										printf("익");
-										_sleep(300);
-										printf(".");
-										_sleep(300);
-										printf(".");
-										_sleep(300);
-										printf(".");
-										_sleep(300);
-										printf(".\n\n");
-										printf("조심스럽게 안방 문을 열었다...\n\n");
-										_sleep(1000);
-										printf("그 순간!\n\n");
-										_sleep(1300);
-										printf("나는 입을 틀어막았다..!\n\n");
-										_sleep(1300);
-										printf("내 앞에 있는건\n\n");
-										_sleep(1300);
-										printf("설사를 질질 흘리고있는\n\n");
-										_sleep(1300);
-										printf("심각한 탈수증세로 마치 좀비처럼 이성을 잃은\n\n");
-										_sleep(1300);
-										printf("인간의 모습을 한 짐승이었다....\n\n");
-										_sleep(1300);
-										printf("내가 당황하는 사이,   그녀석은 나를 발견하고 점점 다가왔다...!\n\n");
-										printf("[1 . 싸운다!]\n");
-										printf("[2 . 도망친다..]\n");
-										scanf("%d", &e);
-										if (e == 2) {
-											if (dex >= 1) {
-												system("cls"); printf("무사히 도망쳤다!");
-												secter2();
-											}
-											else {
-												if (dex < 1) {
-													system("cls");
-													printf("도망칠 수 없다!");
-													tutorialmob();
-												}
-											}
-										}
-										else {
-											tutorialmob();
-										}
-									}
-								}
+								if (d == 2) { printf("겁쟁이는 나가리"); exit(0); }
 								if (d == 1) {
 									system("cls");
 									printf("끼");
@@ -512,18 +464,61 @@ int secter2() //2층 안전지대
 											}
 										}
 									}
-									else {
-										tutorialmob();
+								}
+							}
+							if (d == 1) {
+								system("cls");
+								printf("끼");
+								_sleep(300);
+								printf("이");
+								_sleep(300);
+								printf("익");
+								_sleep(300);
+								printf(".");
+								_sleep(300);
+								printf(".");
+								_sleep(300);
+								printf(".");
+								_sleep(300);
+								printf(".\n\n");
+								printf("조심스럽게 안방 문을 열었다...\n\n");
+								_sleep(1000);
+								printf("그 순간!\n\n");
+								_sleep(1300);
+								printf("나는 입을 틀어막았다..!\n\n");
+								_sleep(1300);
+								printf("내 앞에 있는건\n\n");
+								_sleep(1300);
+								printf("설사를 질질 흘리고있는\n\n");
+								_sleep(1300);
+								printf("심각한 탈수증세로 마치 좀비처럼 이성을 잃은\n\n");
+								_sleep(1300);
+								printf("인간의 모습을 한 짐승이었다....\n\n");
+								_sleep(1300);
+								printf("내가 당황하는 사이,   그녀석은 나를 발견하고 점점 다가왔다...!\n\n");
+								printf("[1 . 싸운다!]\n");
+								printf("[2 . 도망친다..]\n");
+								scanf("%d", &e);
+								if (e == 2) {
+									if (dex >= 1) {
+										system("cls"); printf("무사히 도망쳤다!");
+										secter2();
 									}
-
+									else {
+										if (dex < 1) {
+											system("cls");
+											printf("도망칠 수 없다!");
+											tutorialmob();
+										}
+									}
 								}
 							}
 						}
-
 					}
 				}
 			}
 		}
+	}
 }
 
 int chstatus(int a)//캐릭터정보
@@ -585,10 +580,37 @@ int chequip(int a)
 		printf("                                          \n");
 		if (weapon == 0)printf("                 무기 : 맨손\n");
 		if (weapon == 1)printf("                 무기 : 커튼봉\n");
+		if (weapon == 11)printf("                 무기 : +1 커튼봉\n");
+		if (weapon == 12)printf("                 무기 : +2 커튼봉\n");
+		if (weapon == 13)printf("                 무기 : +3 커튼봉\n");
 		if (weapon == 2)printf("                 무기 : 쇠파이프\n");
+		if (weapon == 21)printf("                 무기 : +1 쇠파이프\n");
+		if (weapon == 22)printf("                 무기 : +2 쇠파이프\n");
+		if (weapon == 23)printf("                 무기 : +3 쇠파이프\n");
+		if (weapon == 24)printf("                 무기 : +4 쇠파이프\n");
+		if (weapon == 25)printf("                 무기 : +5 쇠파이프\n");
 		if (weapon == 3)printf("                 무기 : 골프채\n");
+		if (weapon == 31)printf("                 무기 : +! 골프채\n");
+		if (weapon == 32)printf("                 무기 : +2 골프채\n");
+		if (weapon == 33)printf("                 무기 : +3 골프채\n");
+		if (weapon == 34)printf("                 무기 : +4 골프채\n");
+		if (weapon == 35)printf("                 무기 : +5 골프채\n");
 		if (weapon == 4)printf("                 무기 : 녹슨 진검\n");
+		if (weapon == 41)printf("                 무기 : +1 녹슨 진검\n");
+		if (weapon == 42)printf("                 무기 : +2 녹슨 진검\n");
+		if (weapon == 43)printf("                 무기 : +3 녹슨 진검\n");
+		if (weapon == 44)printf("                 무기 : +4 녹슨 진검\n");
+		if (weapon == 45)printf("                 무기 : +5 녹슨 진검\n");
+		if (weapon == 46)printf("                 무기 : +6 녹슨 진검\n");
+		if (weapon == 47)printf("                 무기 : +7 녹슨 진검\n");
 		if (weapon == 5)printf("                 무기 : 날카로운 진검\n");
+		if (weapon == 51)printf("                 무기 : +1 날카로운 진검\n");
+		if (weapon == 52)printf("                 무기 : +2 날카로운 진검\n");
+		if (weapon == 53)printf("                 무기 : +3 날카로운 진검\n");
+		if (weapon == 54)printf("                 무기 : +4 날카로운 진검\n");
+		if (weapon == 55)printf("                 무기 : +5 날카로운 진검\n");
+		if (weapon == 56)printf("                 무기 : +6 날카로운 진검\n");
+		if (weapon == 57)printf("                 무기 : +7 날카로운 진검\n");
 		if (weapon == 6)printf("                 무기 : 딜도\n");
 		//printf("                 무기 : 맨손\n");
 		printf("                                          \n");
@@ -624,6 +646,89 @@ int chequip(int a)
 	return 0;
 }
 
+
+int enchant()
+{
+	system("cls");
+	static int a;
+	printf("              ┌───────────────────────┐\n");
+	printf("              │          301호 대장장이의 집 - 강화소        │\n");
+	printf("              └───────────────────────┘\n\n");
+	printf("뭐야 아직 안죽었구만!\n\n");
+	_sleep(1500);
+	printf("물건은 가져왔겠지?\n");
+	_sleep(1500);
+	printf("===========================\n");
+	printf("1. 무기를 강화한다");
+	printf("2. 강화소를 떠난다");
+	scanf("%d", &a);
+	if (a == 2) { secter2(); }
+	system("cls");
+	while (1)
+	{
+		if (weapon == 1) { needliquor = 1; }
+		if (weapon == 11) { needliquor = 1; }
+		if (weapon == 11) { needliquor = 1; }
+		if (weapon == 11) { needliquor = 1; }
+		if (weapon == 11) { needliquor = 2; }
+		if (weapon == 11) { needliquor = 2; }
+		system("cls");
+		printf("┌─────────────────┐");
+		if (weapon == 1) { printf("    장비중인 무기 : 커튼봉"); }
+		if (weapon == 11) { printf("    장비중인 무기 : +1 커튼봉"); }
+		if (weapon == 12) { printf("    장비중인 무기 : +2 커튼봉"); }
+		if (weapon == 13) { printf("    장비중인 무기 : +3 커튼봉"); }
+		if (weapon == 2) { printf("    장비중인 무기 : 쇠파이프"); }
+		if (weapon == 21) { printf("    장비중인 무기 : +1 쇠파이프"); }
+		if (weapon == 22) { printf("    장비중인 무기 : +2 쇠파이프"); }
+		if (weapon == 23) { printf("    장비중인 무기 : +3 쇠파이프"); }
+		if (weapon == 24) { printf("    장비중인 무기 : +4 쇠파이프"); }
+		if (weapon == 25) { printf("    장비중인 무기 : +5 쇠파이프"); }
+		if (weapon == 3) { printf("    장비중인 무기 : 골프채"); }
+		if (weapon == 31) { printf("    장비중인 무기 : +1 골프채"); }
+		if (weapon == 32) { printf("    장비중인 무기 : +2 골프채"); }
+		if (weapon == 33) { printf("    장비중인 무기 : +3 골프채"); }
+		if (weapon == 34) { printf("    장비중인 무기 : +4 골프채"); }
+		if (weapon == 35) { printf("    장비중인 무기 : +5 골프채"); }
+		if (weapon == 4) { printf("    장비중인 무기 : 녹슨 진검"); }
+		if (weapon == 41) { printf("    장비중인 무기 : +1 녹슨 진검"); }
+		if (weapon == 42) { printf("    장비중인 무기 : +2 녹슨 진검"); }
+		if (weapon == 43) { printf("    장비중인 무기 : +3 녹슨 진검"); }
+		if (weapon == 44) { printf("    장비중인 무기 : +4 녹슨 진검"); }
+		if (weapon == 45) { printf("    장비중인 무기 : +5 녹슨 진검"); }
+		if (weapon == 46) { printf("    장비중인 무기 : +6 녹슨 진검"); }
+		if (weapon == 47) { printf("    장비중인 무기 : +7 녹슨 진검"); }
+		if (weapon == 5) { printf("    장비중인 무기 : 날카로운 진검"); }
+		if (weapon == 51) { printf("    장비중인 무기 : +1 날카로운 진검"); }
+		if (weapon == 52) { printf("    장비중인 무기 : +2 날카로운 진검"); }
+		if (weapon == 53) { printf("    장비중인 무기 : +3 날카로운 진검"); }
+		if (weapon == 54) { printf("    장비중인 무기 : +4 날카로운 진검"); }
+		if (weapon == 55) { printf("    장비중인 무기 : +5 날카로운 진검"); }
+		if (weapon == 56) { printf("    장비중인 무기 : +6 날카로운 진검"); }
+		if (weapon == 57) { printf("    장비중인 무기 : +7 날카로운 진검"); }
+		printf("├────────┬────────┤");
+		printf("│    필요 재료   │    강화 확률   │");
+		printf("│   고량주 %d 개 │       %d       │", needliquor, chance);
+		printf("└────────┴────────┘");
+		if (weapon == 0)printf("                 무기 : 맨손\n");
+		if (weapon == 1)printf("                 무기 : 커튼봉\n");
+		if (weapon == 2)printf("                 무기 : 쇠파이프\n");
+		if (weapon == 3)printf("                 무기 : 골프채\n");
+		if (weapon == 4)printf("                 무기 : 녹슨 진검\n");
+		if (weapon == 5)printf("                 무기 : 날카로운 진검\n");
+		if (weapon == 6)printf("                 무기 : 딜도\n");
+	}
+}
+
+int enchantchance()
+{
+
+	chance = rand() % 100 + 1;
+	if (chance <= 100)
+	printf("※주의※ 강화 실패시 아이템이 파괴될 수 있습니다.");
+	_sleep(1500);
+
+}
 
 int tutorialmob()
 {
@@ -685,7 +790,6 @@ int mobstatus()
 		mobatt = 8;
 		battletwo(3);
 	}
-	return 0;
 }
 
 int doubleattack()
@@ -761,7 +865,7 @@ int tumble()
 int battletwo(int mobselect)
 {
 	static int a, b, c;
-	while (mobhp <= 0)
+	while (1)
 	{
 		system("cls");
 		_sleep(1000);
@@ -787,7 +891,7 @@ int battletwo(int mobselect)
 			system("cls");
 			printf("[안상근] 은(는) 무기를 휘둘렀다!");
 			_sleep(1000);
-			printf("적에게 %d 데미지!");
+			printf("적에게 %d 데미지!", att);
 
 		}
 		if (a == 2) {
@@ -859,7 +963,7 @@ int firstbattle()
 	while (1)
 	{
 		system("cls");
-		if (hp < 25) { hp = 25, mp = 10; }
+		if (hp <= 0) { hp = 25, mp = 10; }
 		_sleep(1000);
 		system("cls");
 		printf("┌────────┐         ┌────────┐\n");
@@ -901,7 +1005,7 @@ int firstbattle()
 				system("cls");
 				printf("[녹아내린 인간] 에게 [연속공격] 스킬사용!\n\n");
 				_sleep(1500);
-				mp = mp - 6;
+				mp -= 6;
 				dobatt = rand() % att + 1;
 				mobhp -= dobatt;
 				printf("[녹아내린 인간] 에게 %d 데미지!\n\n", dobatt);
