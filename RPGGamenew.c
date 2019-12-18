@@ -32,6 +32,7 @@ int	hp; //체력
 int	mp; //마나
 int xp; //경험치
 int weapon; //무기 (0 = 맨손) (1 = 커튼봉) (2 = 쇠파이프) (3 = 골프채) (4 = 녹슨 진검) (5 = 날카로운 진검) (6 = 딜도)
+int weaponlevel; //무기강화단계
 int armor; //방어구 (0 = 앞치마) (1 = 동물 잠옷) (2 = 청바지 청자켓) (3 = 롱패딩) (4 = 두꺼운 검도복) (5 = 신형 전투복) (6 = 전신 타이즈)
 int riding; //탈것 (0 = 없음) (1 = 인라인스케이트) (2 = 킥보드) (3 = 악센트) (3 = K3) (4 = 두돈반)
 int potion; // 물약 체력 + 마나
@@ -52,6 +53,7 @@ int select1;
 int select2;
 int select3;
 int stack;//전투 했는지 안했는지 확인
+int enchantchance;
 int chance;
 
 int secter1() //1층 스폰
@@ -624,64 +626,28 @@ int enchant()
 	system("cls");
 	while (1)
 	{
-		if (weapon == 1) { needliquor = 1; }
-		if (weapon == 11) { needliquor = 1; }
-		if (weapon == 11) { needliquor = 1; }
-		if (weapon == 11) { needliquor = 1; }
-		if (weapon == 11) { needliquor = 2; }
-		if (weapon == 11) { needliquor = 2; }
+		if (weaponlevel == 0) { needliquor = 1; }
+		if (weaponlevel == 0) { needliquor = 1; }
+		if (weaponlevel == 0) { needliquor = 1; }
+		if (weaponlevel == 0) { needliquor = 1; }
 		system("cls");
 		printf("┌─────────────────┐");
-		if (weapon == 1) { printf("    장비중인 무기 : 커튼봉"); }
-		if (weapon == 11) { printf("    장비중인 무기 : +1 커튼봉"); }
-		if (weapon == 12) { printf("    장비중인 무기 : +2 커튼봉"); }
-		if (weapon == 13) { printf("    장비중인 무기 : +3 커튼봉"); }
-		if (weapon == 2) { printf("    장비중인 무기 : 쇠파이프"); }
-		if (weapon == 21) { printf("    장비중인 무기 : +1 쇠파이프"); }
-		if (weapon == 22) { printf("    장비중인 무기 : +2 쇠파이프"); }
-		if (weapon == 23) { printf("    장비중인 무기 : +3 쇠파이프"); }
-		if (weapon == 24) { printf("    장비중인 무기 : +4 쇠파이프"); }
-		if (weapon == 25) { printf("    장비중인 무기 : +5 쇠파이프"); }
-		if (weapon == 3) { printf("    장비중인 무기 : 골프채"); }
-		if (weapon == 31) { printf("    장비중인 무기 : +1 골프채"); }
-		if (weapon == 32) { printf("    장비중인 무기 : +2 골프채"); }
-		if (weapon == 33) { printf("    장비중인 무기 : +3 골프채"); }
-		if (weapon == 34) { printf("    장비중인 무기 : +4 골프채"); }
-		if (weapon == 35) { printf("    장비중인 무기 : +5 골프채"); }
-		if (weapon == 4) { printf("    장비중인 무기 : 녹슨 진검"); }
-		if (weapon == 41) { printf("    장비중인 무기 : +1 녹슨 진검"); }
-		if (weapon == 42) { printf("    장비중인 무기 : +2 녹슨 진검"); }
-		if (weapon == 43) { printf("    장비중인 무기 : +3 녹슨 진검"); }
-		if (weapon == 44) { printf("    장비중인 무기 : +4 녹슨 진검"); }
-		if (weapon == 45) { printf("    장비중인 무기 : +5 녹슨 진검"); }
-		if (weapon == 46) { printf("    장비중인 무기 : +6 녹슨 진검"); }
-		if (weapon == 47) { printf("    장비중인 무기 : +7 녹슨 진검"); }
-		if (weapon == 5) { printf("    장비중인 무기 : 날카로운 진검"); }
-		if (weapon == 51) { printf("    장비중인 무기 : +1 날카로운 진검"); }
-		if (weapon == 52) { printf("    장비중인 무기 : +2 날카로운 진검"); }
-		if (weapon == 53) { printf("    장비중인 무기 : +3 날카로운 진검"); }
-		if (weapon == 54) { printf("    장비중인 무기 : +4 날카로운 진검"); }
-		if (weapon == 55) { printf("    장비중인 무기 : +5 날카로운 진검"); }
-		if (weapon == 56) { printf("    장비중인 무기 : +6 날카로운 진검"); }
-		if (weapon == 57) { printf("    장비중인 무기 : +7 날카로운 진검"); }
+		if (weapon == 1) { printf("    장비중인 무기 : +%d 커튼봉",weaponlevel); }
+		if (weapon == 2) { printf("    장비중인 무기 : +%d 쇠파이프", weaponlevel); }
+		if (weapon == 3) { printf("    장비중인 무기 : +%d 골프채", weaponlevel); }
+		if (weapon == 4) { printf("    장비중인 무기 : +%d 녹슨 진검", weaponlevel); }
+		if (weapon == 5) { printf("    장비중인 무기 : +%d 날카로운 진검", weaponlevel); }
 		printf("├────────┬────────┤");
 		printf("│    필요 재료   │    강화 확률   │");
 		printf("│   고량주 %d 개 │       %d       │", needliquor, chance);
 		printf("└────────┴────────┘");
-		if (weapon == 0)printf("                 무기 : 맨손\n");
-		if (weapon == 1)printf("                 무기 : 커튼봉\n");
-		if (weapon == 2)printf("                 무기 : 쇠파이프\n");
-		if (weapon == 3)printf("                 무기 : 골프채\n");
-		if (weapon == 4)printf("                 무기 : 녹슨 진검\n");
-		if (weapon == 5)printf("                 무기 : 날카로운 진검\n");
-		if (weapon == 6)printf("                 무기 : 딜도\n");
 	}
 }
 
-int enchantchance()
+int enchantprint()
 {
 	srand(time(NULL));
-	chance = rand() % 100 + 1;
+	enchantchance = rand() % 100 + 1;
 	if (chance <= 100)
 		printf("※주의※ 강화 실패시 아이템이 파괴될 수 있습니다.");
 	_sleep(1500);
@@ -711,11 +677,11 @@ int mobstatus()
 
 	if (randmob == 1) {
 		system("cls");
-		printf("LV. 2 [뒤틀린 시체] 이(가) 나타났다!\n\n");
+		printf("LV. 1 [뒤틀린 시체] 이(가) 나타났다!\n\n");
 		_sleep(1500);
 		system("cls");
 		//뒤틀린 시체
-		moblevel = 2;
+		moblevel = 1;
 		maxmobhp = 23;
 		maxmobmp = 0;
 		mobhp = 23;
@@ -725,13 +691,13 @@ int mobstatus()
 	}
 	if (randmob == 2) {
 		system("cls");
-		printf("LV. 3 [부풀어오른 시체] 이(가) 나타났다!\n\n");
+		printf("LV. 2 [부풀어오른 시체] 이(가) 나타났다!\n\n");
 		_sleep(1500);
 		printf("[부풀어오른 시체] 이(가) 곧 터질것 처럼 위태롭다!\n\n");
 		_sleep(1500);
 		system("cls");
 		//부풀어오른 시체 (죽으면 터지면서 데미지)
-		moblevel = 3;
+		moblevel = 2;
 		maxmobhp = 10;
 		maxmobmp = 0;
 		mobhp = 10;
@@ -764,6 +730,7 @@ int doubleattack()
 	mobhp -= dobatt;
 	printf("적에게 %d 데미지!\n", dobatt);
 	_sleep(1000);
+	srand(time(NULL));
 	dobatt = rand() % att + 1;
 	mobhp -= dobatt;
 	printf("적에게 %d 데미지!\n\n", dobatt);
@@ -783,47 +750,44 @@ int tumble()
 	if (round == 0) {
 		system("cls");
 		printf("휘릭~\n\n");
-		_sleep(1500);
+		_sleep(1000);
 		printf("히릿~\n\n");
-		_sleep(1500);
+		_sleep(1000);
 		printf("두바퀴 돌았다!\n\n");
-		_sleep(1500);
+		_sleep(1000);
 		mobhp -= tumble1 + tumble2;
 		printf("적에게 %d 데미지!\n\n", tumble1 + tumble2);
 		_sleep(1500);
-		system("cls");
 	}
 	if (round == 1) {
 		system("cls");
 		printf("휘릭~\n\n");
-		_sleep(1500);
+		_sleep(1000);
 		printf("히릿~\n\n");
-		_sleep(1500);
+		_sleep(1000);
 		printf("히익~\n\n");
-		_sleep(1500);
+		_sleep(1000);
 		printf("세바퀴 돌았다!\n\n");
-		_sleep(1500);
+		_sleep(1000);
 		mobhp -= tumble1 + tumble2 + tumble3;
 		printf("적에게 %d 데미지!\n\n", tumble1 + tumble2 + tumble3);
 		_sleep(1500);
-		system("cls");
 	}
 	if (round == 2) {
 		system("cls");
 		printf("휘릭~\n\n");
-		_sleep(1500);
+		_sleep(1000);
 		printf("히릿~\n\n");
-		_sleep(1500);
+		_sleep(1000);
 		printf("히익~\n\n");
-		_sleep(1500);
+		_sleep(1000);
 		printf("응기잇~\n\n");
-		_sleep(1500);
+		_sleep(1000);
 		printf("네바퀴 돌았다!\n\n");
-		_sleep(1500);
+		_sleep(1000);
 		mobhp -= tumble1 + tumble2 + tumble3 + tumble4;
 		printf("적에게 %d 데미지!\n\n", tumble1 + tumble2 + tumble3 + tumble4);
 		_sleep(1500);
-		system("cls");
 	}
 	return 0;
 }
@@ -936,8 +900,11 @@ int battletwo(int mobselect)
 		}
 	}
 	system("cls");
-	printf("적을 제압했다!");
+	printf("적을 제압했다!\n\n");
+	_sleep(1500);
 	xp = rand() % level + 3;
+	printf("%d 의 경험치를 획득했다!\n\n", xp);
+	_sleep(1500);
 	if (hp < maxhp) { hp = maxhp, mp = maxmp; }
 	poison = 0;
 
@@ -967,6 +934,26 @@ int firstbattle()
 		if (mp >= 6) printf("2. 스킬 : 연속공격\n");
 		if (mp >= 12) printf("3. 스킬 : 공중제비\n");
 		scanf("%d", &a);
+		if (a == 3) {
+			if (mp < 12) {
+				system("cls");
+				printf("마나가 부족합니다.");
+			}
+			mp -= 12;
+			system("cls");
+			printf("[안상근] 는(은) 흥분한 나머지 [공중제비] 를 돌았다!");
+			_sleep(1500);
+			tumble();
+			system("cls");
+			if (mobhp <= 0) {
+				break;
+			}
+			mobattdm = rand() % mobatt + 1;
+			damage = mobattdm - def;
+			hp -= damage;
+			printf("[안상근] 에게 %d 데미지!\n\n", damage);
+			_sleep(1500);
+		}
 		if (a == 1)
 		{
 			srand(time(NULL));
