@@ -52,8 +52,8 @@ int select0;
 int select1;
 int select2;
 int select3;
-int stack;//전투 했는지 안했는지 확인
-int enchantchance;
+int stack;//전투 했는지 안했는지 확
+int success; //강화성공
 int chance;
 
 int secter1() //1층 스폰
@@ -177,6 +177,7 @@ int secter2() //2층 안전지대
 		printf(" 6. 아래층으로 내려가기\n");
 
 		scanf("%d", &select2);
+		if (select2 == 5) { secter3(); }
 		if (select2 == 4) {
 			system("cls");
 			printf("문 뒤쪽에서 알수없는 살기가 느껴진다\n\n");
@@ -481,6 +482,27 @@ int secter2() //2층 안전지대
 	}
 }
 
+int secter3()
+{
+	while (1) {
+
+		system("cls");
+		printf("              ┌───────────────────────┐\n");
+		printf("              │       안전지역  -  한승아파트 2층 중앙       │\n");
+		printf("              └───────────────────────┘\n");
+		_sleep(1000);
+		printf(" 무엇을 할까?\n");
+		_sleep(500);
+		printf("\n");
+		printf(" 1. 장비창\n");
+		printf(" 2. 캐릭터 정보\n");
+		printf(" 3. 301호로 들어가기\n");
+		printf(" 4. 302호로 들어가기\n");
+		printf(" 5. 윗층으로 올라가기\n");
+		printf(" 6. 아래층으로 내려가기\n");
+	}
+}
+
 int chstatus(int a)//캐릭터정보
 {
 	static int choose;
@@ -539,38 +561,16 @@ int chequip(int a)
 		printf("                       캐릭터 장비        \n");
 		printf("                                          \n");
 		if (weapon == 0)printf("                 무기 : 맨손\n");
-		if (weapon == 1)printf("                 무기 : 커튼봉\n");
-		if (weapon == 11)printf("                 무기 : +1 커튼봉\n");
-		if (weapon == 12)printf("                 무기 : +2 커튼봉\n");
-		if (weapon == 13)printf("                 무기 : +3 커튼봉\n");
-		if (weapon == 2)printf("                 무기 : 쇠파이프\n");
-		if (weapon == 21)printf("                 무기 : +1 쇠파이프\n");
-		if (weapon == 22)printf("                 무기 : +2 쇠파이프\n");
-		if (weapon == 23)printf("                 무기 : +3 쇠파이프\n");
-		if (weapon == 24)printf("                 무기 : +4 쇠파이프\n");
-		if (weapon == 25)printf("                 무기 : +5 쇠파이프\n");
-		if (weapon == 3)printf("                 무기 : 골프채\n");
-		if (weapon == 31)printf("                 무기 : +! 골프채\n");
-		if (weapon == 32)printf("                 무기 : +2 골프채\n");
-		if (weapon == 33)printf("                 무기 : +3 골프채\n");
-		if (weapon == 34)printf("                 무기 : +4 골프채\n");
-		if (weapon == 35)printf("                 무기 : +5 골프채\n");
-		if (weapon == 4)printf("                 무기 : 녹슨 진검\n");
-		if (weapon == 41)printf("                 무기 : +1 녹슨 진검\n");
-		if (weapon == 42)printf("                 무기 : +2 녹슨 진검\n");
-		if (weapon == 43)printf("                 무기 : +3 녹슨 진검\n");
-		if (weapon == 44)printf("                 무기 : +4 녹슨 진검\n");
-		if (weapon == 45)printf("                 무기 : +5 녹슨 진검\n");
-		if (weapon == 46)printf("                 무기 : +6 녹슨 진검\n");
-		if (weapon == 47)printf("                 무기 : +7 녹슨 진검\n");
-		if (weapon == 5)printf("                 무기 : 날카로운 진검\n");
-		if (weapon == 51)printf("                 무기 : +1 날카로운 진검\n");
-		if (weapon == 52)printf("                 무기 : +2 날카로운 진검\n");
-		if (weapon == 53)printf("                 무기 : +3 날카로운 진검\n");
-		if (weapon == 54)printf("                 무기 : +4 날카로운 진검\n");
-		if (weapon == 55)printf("                 무기 : +5 날카로운 진검\n");
-		if (weapon == 56)printf("                 무기 : +6 날카로운 진검\n");
-		if (weapon == 57)printf("                 무기 : +7 날카로운 진검\n");
+		if (weapon == 1 && weaponlevel == 9)printf("                 무기 : +MAX 커튼봉\n");
+		if (weapon == 1)printf("                 무기 : +%d 커튼봉\n", weaponlevel);
+		if (weapon == 2 && weaponlevel == 9)printf("                 무기 : +MAX 쇠파이프\n");
+		if (weapon == 2)printf("                 무기 : +%d 쇠파이프\n", weaponlevel);
+		if (weapon == 3 && weaponlevel == 9)printf("                 무기 : +MAX 골프채\n");
+		if (weapon == 3)printf("                 무기 : +%d 골프채\n", weaponlevel);
+		if (weapon == 4 && weaponlevel == 9)printf("                 무기 : +MAX 녹슨 진검\n");
+		if (weapon == 4)printf("                 무기 : +%d 녹슨 진검\n", weaponlevel);
+		if (weapon == 5 && weaponlevel == 9)printf("                 무기 : +MAX 날카로운 진검\n");
+		if (weapon == 5)printf("                 무기 : +%d 날카로운 진검\n", weaponlevel);
 		if (weapon == 6)printf("                 무기 : 딜도\n");
 		//printf("                 무기 : 맨손\n");
 		printf("                                          \n");
@@ -609,49 +609,116 @@ int chequip(int a)
 
 int enchant()
 {
-	system("cls");
-	static int a;
-	printf("              ┌───────────────────────┐\n");
-	printf("              │          301호 대장장이의 집 - 강화소        │\n");
-	printf("              └───────────────────────┘\n\n");
-	printf("뭐야 아직 안죽었구만!\n\n");
-	_sleep(1500);
-	printf("물건은 가져왔겠지?\n");
-	_sleep(1500);
-	printf("===========================\n");
-	printf("1. 무기를 강화한다");
-	printf("2. 강화소를 떠난다");
-	scanf("%d", &a);
-	if (a == 2) { secter2(); }
-	system("cls");
-	while (1)
-	{
-		if (weaponlevel == 0) { needliquor = 1; }
-		if (weaponlevel == 0) { needliquor = 1; }
-		if (weaponlevel == 0) { needliquor = 1; }
-		if (weaponlevel == 0) { needliquor = 1; }
+	while (1) {
 		system("cls");
-		printf("┌─────────────────┐");
-		if (weapon == 1) { printf("    장비중인 무기 : +%d 커튼봉",weaponlevel); }
-		if (weapon == 2) { printf("    장비중인 무기 : +%d 쇠파이프", weaponlevel); }
-		if (weapon == 3) { printf("    장비중인 무기 : +%d 골프채", weaponlevel); }
-		if (weapon == 4) { printf("    장비중인 무기 : +%d 녹슨 진검", weaponlevel); }
-		if (weapon == 5) { printf("    장비중인 무기 : +%d 날카로운 진검", weaponlevel); }
-		printf("├────────┬────────┤");
-		printf("│    필요 재료   │    강화 확률   │");
-		printf("│   고량주 %d 개 │       %d       │", needliquor, chance);
-		printf("└────────┴────────┘");
+		static int a;
+		printf("              ┌───────────────────────┐\n");
+		printf("              │          301호 대장장이의 집 - 강화소        │\n");
+		printf("              └───────────────────────┘\n\n");
+		printf("뭐야 아직 안죽었구만!\n\n");
+		_sleep(1500);
+		printf("물건은 가져왔겠지?\n");
+		_sleep(1500);
+		printf("===========================\n");
+		printf("1. 무기를 강화한다\n");
+		printf("2. 강화소를 떠난다\n");
+		scanf("%d", &a);
+		if (a == 2) { secter2(); }
+		if (a == 1) {
+			if (weaponlevel < 10) {
+				enchantchance();
+			}
+			system("cls");
+			printf("더 이상 강화할 수 없습니다.");
+		}
 	}
 }
 
-int enchantprint()
+int enchantchance()
 {
-	srand(time(NULL));
-	enchantchance = rand() % 100 + 1;
-	if (chance <= 100)
-		printf("※주의※ 강화 실패시 아이템이 파괴될 수 있습니다.");
-	_sleep(1500);
+	while (1)
+	{
+		static int a, broken;
+		system("cls");
+		if (weaponlevel == 0) { chance = 100; }
+		if (weaponlevel == 1) { chance = 90; }
+		if (weaponlevel == 2) { chance = 75; }
+		if (weaponlevel == 3) { chance = 60; }
+		if (weaponlevel == 4) { chance = 50; }
+		if (weaponlevel == 5) { chance = 40; }
+		if (weaponlevel == 6) { chance = 30; }
+		if (weaponlevel == 7) { chance = 15; }
+		if (weaponlevel == 8) { chance = 5; }
+		if (weaponlevel == 0) { needliquor = 1; }
+		if (weaponlevel == 1) { needliquor = 3; }
+		if (weaponlevel == 2) { needliquor = 5; }
+		if (weaponlevel == 3) { needliquor = 7; }
+		if (weaponlevel == 4) { needliquor = 10; }
+		if (weaponlevel == 5) { needliquor = 12; }
+		if (weaponlevel == 6) { needliquor = 15; }
+		if (weaponlevel == 7) { needliquor = 18; }
+		if (weaponlevel == 8) { needliquor = 20; }
+		printf("┌─────────────────┐\n");
+		if (weapon == 1 && weaponlevel == 9) { printf("    장비중인 무기 : +MAX 커튼봉\n"); }
+		if (weapon == 1) { printf("    장비중인 무기 : +%d 커튼봉\n", weaponlevel); }
+		if (weapon == 2 && weaponlevel == 9) { printf("    장비중인 무기 : +MAX 쇠파이프\n"); }
+		if (weapon == 2) { printf("    장비중인 무기 : +%d 쇠파이프\n", weaponlevel); }
+		if (weapon == 3 && weaponlevel == 9) { printf("    장비중인 무기 : +MAX 골프채\n"); }
+		if (weapon == 3) { printf("    장비중인 무기 : +%d 골프채\n", weaponlevel); }
+		if (weapon == 4 && weaponlevel == 9) { printf("    장비중인 무기 : +MAX 녹슨 진검\n"); }
+		if (weapon == 4) { printf("    장비중인 무기 : +%d 녹슨 진검\n", weaponlevel); }
+		if (weapon == 5 && weaponlevel == 9) { printf("    장비중인 무기 : +MAX 날카로운 진검\n"); }
+		if (weapon == 5) { printf("    장비중인 무기 : +%d 날카로운 진검\n", weaponlevel); }
+		printf("├────────┬────────┤\n");
+		printf("│    필요 재료   │    강화 확률   │\n");
+		printf("│   고량주 %d 개 │       %d       │\n", needliquor, chance);
+		printf("└────────┴────────┘\n");
+		printf("소지중인 고량주 : %d 개\n\n", liquor);
+		printf("※주의※ 강화 실패시 50% 확률로 강화 단계가 하락됩니다.\n\n");
+		printf("1. 강화하기\n");
+		printf("1. 뒤로가기\n");
+		scanf("%d", &a);
+		if (a == 2) { enchant(); }
+		if (a == 1) {
+			system("cls");
+			printf("강화중□□□□\n");
+			_sleep(500);
+			system("cls");
+			printf("강화중■□□□\n");
+			_sleep(500);
+			system("cls");
+			printf("강화중■■□□\n");
+			_sleep(500);
+			system("cls");
+			printf("강화중■■■□\n");
+			_sleep(500);
+			system("cls");
+			printf("강화중■■■■\n");
+			_sleep(500);
+			system("cls");
+			srand(time(NULL));
+			success = rand() % 100 + 1;
+			if (chance >= success) {
+				printf("강화 성공!\n\n");
+				_sleep(1000);
+				printf("강화 단계 상승!\n\n");
+				_sleep(1000);
+				weaponlevel++;
+			}
+			if (chance <= success) {
+				printf("강화 실패...!\n\n");
+				_sleep(1000);
+				srand(time(NULL));
+				broken = rand() % 100 + 1;
+				if (broken <= 50) {
+					printf("강화 단계가 하락했습니다ㅠ.ㅠ\n");
+					_sleep(1000);
+					weaponlevel--;
+				}
+			}
 
+		}
+	}
 }
 
 int tutorialmob()
