@@ -485,10 +485,10 @@ int secter2() //2층 안전지대
 int secter3()
 {
 	while (1) {
-
+		static int a;
 		system("cls");
 		printf("              ┌───────────────────────┐\n");
-		printf("              │       안전지역  -  한승아파트 2층 중앙       │\n");
+		printf("              │       안전지역  -  한승아파트 3층 중앙       │\n");
 		printf("              └───────────────────────┘\n");
 		_sleep(1000);
 		printf(" 무엇을 할까?\n");
@@ -500,6 +500,10 @@ int secter3()
 		printf(" 4. 302호로 들어가기\n");
 		printf(" 5. 윗층으로 올라가기\n");
 		printf(" 6. 아래층으로 내려가기\n");
+		scanf("%d", &a);
+		if (a == 3) {
+			enchant();
+		}
 	}
 }
 
@@ -624,13 +628,13 @@ int enchant()
 		printf("2. 강화소를 떠난다\n");
 		scanf("%d", &a);
 		if (a == 2) { secter2(); }
-		if (a == 1) {
-			if (weaponlevel < 10) {
-				enchantchance();
+		if (a == 1)
+			if (weaponlevel == 9) {
+				system("cls");
+				printf("더 이상 강화할 수 없습니다.");
+				_sleep(1000);
 			}
-			system("cls");
-			printf("더 이상 강화할 수 없습니다.");
-		}
+		enchantchance();
 	}
 }
 
@@ -638,6 +642,7 @@ int enchantchance()
 {
 	while (1)
 	{
+		liquor = 100;
 		static int a, broken;
 		system("cls");
 		if (weaponlevel == 0) { chance = 100; }
@@ -671,15 +676,20 @@ int enchantchance()
 		if (weapon == 5) { printf("    장비중인 무기 : +%d 날카로운 진검\n", weaponlevel); }
 		printf("├────────┬────────┤\n");
 		printf("│    필요 재료   │    강화 확률   │\n");
-		printf("│   고량주 %d 개 │       %d       │\n", needliquor, chance);
+		printf("    고량주 %d 개          %d%%        \n", needliquor, chance);
 		printf("└────────┴────────┘\n");
 		printf("소지중인 고량주 : %d 개\n\n", liquor);
-		printf("※주의※ 강화 실패시 50% 확률로 강화 단계가 하락됩니다.\n\n");
+		printf("※주의※ 강화 실패시 50%% 확률로 강화 단계가 하락됩니다.\n\n");
 		printf("1. 강화하기\n");
 		printf("1. 뒤로가기\n");
 		scanf("%d", &a);
 		if (a == 2) { enchant(); }
 		if (a == 1) {
+			if (liquor < needliquor) {
+				system("cls");
+				printf("재료가 부족합니다.\n\n");
+				return 0;
+			}
 			system("cls");
 			printf("강화중□□□□\n");
 			_sleep(500);
@@ -788,6 +798,7 @@ int mobstatus()
 		mobatt = 8;
 		battletwo(3);
 	}
+	return 0;
 }
 
 int doubleattack()
