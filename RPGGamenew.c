@@ -78,10 +78,10 @@ int secter1() //1층 스폰
 
 		scanf("%d", &select1);
 		if (select1 == 1) {
-			chequip(1);//캐릭터 장비
+			chequip();//캐릭터 장비
 		}
 		if (select1 == 2) {
-			chstatus(1);//캐릭터 정보 
+			chstatus();//캐릭터 정보 
 		}
 		if (select1 == 5) {
 			system("cls");
@@ -177,7 +177,20 @@ int secter2() //2층 안전지대
 		printf(" 6. 아래층으로 내려가기\n");
 
 		scanf("%d", &select2);
-		if (select2 == 5) { secter3(); }
+		if (select2 == 5) {
+			system("cls");
+			printf("계단을 올라가는중.");
+			_sleep(500);
+			printf(".");
+			_sleep(500);
+			printf(".");
+			_sleep(500);
+			printf(".");
+			_sleep(500);
+			printf(".");
+			_sleep(500);
+			secter3();
+		}
 		if (select2 == 4) {
 			system("cls");
 			printf("문 뒤쪽에서 알수없는 살기가 느껴진다\n\n");
@@ -226,13 +239,24 @@ int secter2() //2층 안전지대
 			}
 		}
 		if (select2 == 6) {
+			system("cls");
+			printf("계단 내려가는중.");
+			_sleep(500);
+			printf(".");
+			_sleep(500);
+			printf(".");
+			_sleep(500);
+			printf(".");
+			_sleep(500);
+			printf(".");
+			_sleep(500);
 			secter1();
 		}
 		if (select2 == 1) {
-			chequip(2);//캐릭터 장비
+			chequip();//캐릭터 장비
 		}
 		if (select2 == 2) {
-			chstatus(2);//캐릭터 정보 
+			chstatus();//캐릭터 정보 
 		}
 		if (select2 == 3) {
 			if (stack > 0) {
@@ -504,13 +528,18 @@ int secter3()
 		if (a == 3) {
 			enchant();
 		}
+		if (a == 1) {
+			chequip();
+		}
+		if (a == 2) {
+			chstatus();
+		}
 	}
 }
 
-int chstatus(int a)//캐릭터정보
+int chstatus()//캐릭터정보
 {
 	static int choose;
-	if (a > 0) {
 		system("cls");
 		printf("              ┌────────────┐\n");
 		printf("                       캐릭터 정보        \n");
@@ -543,23 +572,16 @@ int chstatus(int a)//캐릭터정보
 		printf("              └────────────┘\n");
 		printf("\n 1. 돌아가기\n");
 		scanf("%d", &choose);
-		system("cls");
-		if (a == 1) {
-			secter1();
+		if (choose == 1) {
+			system("cls");
+			return 0;
 		}
-		else {
-			if (a == 2) {
-				secter2();
-			}
-		}
-	}
-	return 0;
+		return 0;
 }
 
-int chequip(int a)
+int chequip()
 {
 	static int choose;
-	if (a > 0) {
 		system("cls");
 		printf("              ┌────────────┐\n");
 		printf("                       캐릭터 장비        \n");
@@ -598,15 +620,10 @@ int chequip(int a)
 		printf("              └────────────┘\n");
 		printf("\n1. 돌아가기\n");
 		scanf("%d", &choose);
-		if (a == 1) {
-			secter1();
+		if (choose == 1) {
+			system("cls");
+			return 0;
 		}
-		else {
-			if (a == 2) {
-				secter2();
-			}
-		}
-	}
 	return 0;
 }
 
@@ -624,17 +641,44 @@ int enchant()
 		printf("물건은 가져왔겠지?\n");
 		_sleep(1500);
 		printf("===========================\n");
-		printf("1. 무기를 강화한다\n");
-		printf("2. 강화소를 떠난다\n");
+		printf("1. 대화한다\n");
+		printf("2. 무기를 강화한다\n");
+		printf("3. 강화소를 떠난다\n");
 		scanf("%d", &a);
-		if (a == 2) { secter2(); }
-		if (a == 1)
+		if (a == 3) { secter2(); }
+		if (a == 1) {
+			if (weapon == 1) {
+				system("cls");
+				printf("멀쩡한 인간은 오랜만이군.\n\n");
+				_sleep(1000);
+				printf("뭐야?   ");
+				_sleep(500);
+				printf("그런걸 무기라고 들고있는건가?\n\n");
+				_sleep(1000);
+				printf("그런 무기로는 살아남기 힘들걸세\n\n");
+				_sleep(1000);
+				printf("이걸 주지\n\n");
+				_sleep(500);
+				system("cls");
+				printf("[ 쇠파이프 ] 를 얻었다!\n\n");
+			}
+			system("cls");
+			printf("강화 할거야 말거야!\n\n");
+			_sleep(1000);
+			printf("바쁘니까 말시키지마!\n\n");
+			_sleep(1000);
+		}
+		if (a == 2) {
 			if (weaponlevel == 9) {
 				system("cls");
 				printf("더 이상 강화할 수 없습니다.");
 				_sleep(1000);
 			}
-		enchantchance();
+			else
+			{
+				enchantchance();
+			}
+		}
 	}
 }
 
