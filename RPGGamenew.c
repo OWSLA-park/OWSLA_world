@@ -632,43 +632,50 @@ int enchant()
 {
 	while (1) {
 		system("cls");
-		static int a;
+		static int a, b;
 		printf("              ┌───────────────────────┐\n");
 		printf("              │          301호 대장장이의 집 - 강화소        │\n");
 		printf("              └───────────────────────┘\n\n");
-		printf("뭐야 아직 안죽었구만!\n\n");
-		_sleep(1500);
-		printf("물건은 가져왔겠지?\n");
-		_sleep(1500);
-		printf("===========================\n");
-		printf("1. 대화한다\n");
-		printf("2. 무기를 강화한다\n");
-		printf("3. 강화소를 떠난다\n");
-		scanf("%d", &a);
-		if (a == 3) { secter2(); }
-		if (a == 1) {
-			if (weapon == 1) {
+		if (weapon == 1) {
+			printf("오 생존자구만!\n\n");
+			_sleep(1500);
+			printf("반갑네.\n");
+			_sleep(1500);
+			printf("===========================\n");
+			printf("1. 대화한다\n");
+			scanf("%d", &a);
+			if (a == 1) {
 				system("cls");
 				printf("멀쩡한 인간은 오랜만이군.\n\n");
 				_sleep(1000);
 				printf("뭐야?   ");
-				_sleep(500);
+				_sleep(1000);
 				printf("그런걸 무기라고 들고있는건가?\n\n");
 				_sleep(1000);
 				printf("그런 무기로는 살아남기 힘들걸세\n\n");
 				_sleep(1000);
 				printf("이걸 주지\n\n");
-				_sleep(500);
+				_sleep(1000);
 				system("cls");
 				printf("[ 쇠파이프 ] 를 얻었다!\n\n");
+				_sleep(1000);
+				printf("공격력 상승! 5 -> 8\n\n");
+				_sleep(1000);
+				weapon = 2;
+				att = 8;
+				enchant();
 			}
-			system("cls");
-			printf("강화 할거야 말거야!\n\n");
-			_sleep(1000);
-			printf("바쁘니까 말시키지마!\n\n");
-			_sleep(1000);
 		}
-		if (a == 2) {
+		printf("뭐야 아직 안죽었구만!\n\n");
+		_sleep(1500);
+		printf("물건은 가져왔겠지?\n");
+		_sleep(1500);
+		printf("===========================\n");
+		printf("1. 무기를 강화한다\n");
+		printf("2. 강화소를 떠난다\n");
+		scanf("%d", &b);
+		if (b == 2) { secter3(); }
+		if (a == 1) {
 			if (weaponlevel == 9) {
 				system("cls");
 				printf("더 이상 강화할 수 없습니다.");
